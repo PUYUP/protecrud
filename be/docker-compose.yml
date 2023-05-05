@@ -1,0 +1,26 @@
+version: '2'
+
+services:
+  webapi:
+    build: ./app
+    command: python manage.py runserver 0.0.0.0:9000
+    volumes:
+      - webapi:/usr/src/protecrud/
+    ports:
+      - 9000:9000
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - database
+  database:
+    image: postgres:15.2
+    volumes: 
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=webapi
+      - POSTGRES_PASSWORD=V9rj0kmE#e0R
+      - POSTGRES_DB=webapi_dev
+  
+volumes:
+  webapi:
+  postgres_data:
