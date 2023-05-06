@@ -18,6 +18,7 @@ class BaseEmployeeSerializer(serializers.ModelSerializer):
 class ListEmployeeSerializer(BaseEmployeeSerializer):
     roles = serializers.StringRelatedField(many=True)
     employee_name = serializers.CharField(source='user.full_name')
+    is_super_admin = serializers.BooleanField()
 
     class Meta(BaseEmployeeSerializer.Meta):
         fields = '__all__'

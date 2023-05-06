@@ -137,6 +137,11 @@ class EmployeeViewSet(ViewSet):
     @transaction.atomic
     def partial_update(self, request, pk):
         instance = self.get_instance_or_notfound(pk, True)
+
+        # super admin a.k.a company creator can't delete
+        if instance.is_super_admin:
+            return Response({'detail': _("Cant update super admin")})
+
         serializer = SubmitEmployeeSerializer(
             instance=instance, data=request.data, context=self.context)
         if serializer.is_valid(raise_exception=True):
@@ -150,6 +155,11 @@ class EmployeeViewSet(ViewSet):
     @transaction.atomic
     def destroy(self, request, pk):
         instance = self.get_instance_or_notfound(pk, True)
+
+        # super admin a.k.a company creator can't delete
+        if instance.is_super_admin:
+            return Response({'detail': _("Cant delete super admin")})
+
         instance.delete()
 
         return Response({'detail': _("Delete success!")}, status=res_status.HTTP_204_NO_CONTENT)

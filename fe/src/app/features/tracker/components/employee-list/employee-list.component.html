@@ -16,12 +16,17 @@
   <ng-container matColumnDef="roles">
     <th mat-header-cell *matHeaderCellDef> Roles </th>
     <td mat-cell *matCellDef="let element"> 
-		<mat-chip-listbox>
-			<ng-container *ngFor="let role of element.roles">
-				<mat-chip class="text-fsxs">{{ role }}</mat-chip>
-			</ng-container>
-		</mat-chip-listbox>
-	</td>
+      <div *ngIf="element.is_super_admin else roles">
+        <mat-chip class="text-fsxs">Super Admin</mat-chip>
+      </div>
+      <ng-template #roles>
+        <mat-chip-listbox>
+          <ng-container *ngFor="let role of element.roles">
+            <mat-chip class="text-fsxs">{{ role }}</mat-chip>
+          </ng-container>
+        </mat-chip-listbox>
+      </ng-template>
+	  </td>
   </ng-container>
 
   <!-- Join Date -->
@@ -34,15 +39,23 @@
   <ng-container matColumnDef="action">
     <th mat-header-cell *matHeaderCellDef class="!text-center w-28"> Action </th>
     <td mat-cell *matCellDef="let element"> 
-      <div class="flex justify-center gap-3 w-28">
-					<button mat-icon-button color="warn" (click)="deleteHandler(element.id)" matTooltip="Delete">
-						<mat-icon>delete_forever</mat-icon>
-					</button>
+      <div *ngIf="element.is_super_admin else actions" class="w-28">
+        <div class="text-center leading-4">
+          No action allowed
+        </div>
+      </div>
 
-					<button mat-icon-button (click)="editHandler(element)" matTooltip="Update">
-						<mat-icon>edit_note</mat-icon>
-					</button>
-				</div>
+      <ng-template #actions>
+        <div class="flex justify-center gap-3">
+          <button mat-icon-button color="warn" (click)="deleteHandler(element.id)" matTooltip="Delete">
+            <mat-icon>delete_forever</mat-icon>
+          </button>
+
+          <button mat-icon-button (click)="editHandler(element)" matTooltip="Update">
+            <mat-icon>edit_note</mat-icon>
+          </button>
+        </div>
+      </ng-template>
     </td>
   </ng-container>
 

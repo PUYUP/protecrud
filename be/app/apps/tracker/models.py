@@ -36,6 +36,11 @@ class Employee(models.Model):
     def __str__(self) -> str:
         return self.user.full_name
 
+    @property
+    def is_super_admin(self):
+        # super admin actually is company `created_by`
+        return self.company.created_by.id == self.user.id
+
 
 class Asset(models.Model):
     class Condition(models.TextChoices):

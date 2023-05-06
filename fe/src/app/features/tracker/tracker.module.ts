@@ -28,6 +28,7 @@ import { CompanyDetailComponent } from './components/company-detail/company-deta
 import { EmployeeListComponent } from './components/employee-list/employee-list.component';
 import { EmployeeEditorComponent } from './components/employee-editor/employee-editor.component';
 import { EmployeeEditorFormComponent } from './components/employee-editor-form/employee-editor-form.component';
+import { AssetListComponent } from './components/asset-list/asset-list.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { EmployeeEditorFormComponent } from './components/employee-editor-form/e
     CompanyDetailComponent,
     EmployeeListComponent,
     EmployeeEditorComponent,
-    EmployeeEditorFormComponent
+    EmployeeEditorFormComponent,
+    AssetListComponent
   ],
   entryComponents: [
     CompanyListComponent,
@@ -53,6 +55,7 @@ import { EmployeeEditorFormComponent } from './components/employee-editor-form/e
     EmployeeListComponent,
     EmployeeEditorComponent,
     EmployeeEditorFormComponent,
+    AssetListComponent,
   ],
   imports: [
     CommonModule,
