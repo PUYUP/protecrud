@@ -18,6 +18,7 @@ export class EmployeeEditorFormComponent implements OnInit {
   
   private onDestroy$: Subject<boolean> | any = new Subject<false>;
 
+  public rolesHasChanged: boolean = false;
   public groups: any[] | any;
   public formGroup: FormGroup<any> | any;
   public company$: Observable<{ data: any, status: string }>;
@@ -57,6 +58,8 @@ export class EmployeeEditorFormComponent implements OnInit {
         user: this.props.data.user,
         roles: this.props.data.roles,
       });
+
+      this.formGroup.controls.user.disable();
     }
   }
 
@@ -70,11 +73,26 @@ export class EmployeeEditorFormComponent implements OnInit {
 
     if (this.props.data?.id) {
       // update
-      this.store.dispatch(UpdateEmployee({ pid: this.props.data.id, data: payload }));
+      this.store.dispatch(UpdateEmployee({ 
+        pid: this.props.data.id, 
+        data: {
+          ...payload,
+          user: this.props.data.user,
+        } 
+      }));
     }
     else {
       // create
       this.store.dispatch(SubmitEmployee({ data: payload }));
+    }
+  }
+
+  rolesChangedHandler(event: any): void {
+    const currentRoles = this.props.data?.roles;
+    const selectedRoles = event.value.map((obj: any) => obj.name);
+
+    if (this.props.data?.id) {
+      this.rolesHasChanged = currentRoles.length != selectedRoles.length;
     }
   }
 

@@ -146,3 +146,10 @@ class EmployeeViewSet(ViewSet):
                 raise ValidationError(detail=smart_str(error))
             return Response(serializer.data, status=res_status.HTTP_201_CREATED)
         return Response(serializer.errors, status=res_status.HTTP_403_FORBIDDEN)
+
+    @transaction.atomic
+    def destroy(self, request, pk):
+        instance = self.get_instance_or_notfound(pk, True)
+        instance.delete()
+
+        return Response({'detail': _("Delete success!")}, status=res_status.HTTP_204_NO_CONTENT)

@@ -130,3 +130,22 @@ export const UpdateEmployeeFailure = createAction(
   '[Tracker] Update Employee Failure',
   props<{ error: any }>()
 );
+
+
+// ...
+// DELETE EMPLOYEE
+// ...
+export const DeleteEmployee = createAction(
+  '[Tracker] Delete Employee',
+  props<{ pid: string | number }>()
+);
+
+export const DeleteEmployeeSuccess = createAction(
+  '[Tracker] Delete Employee Success',
+  props<{ pid: string | number }>()
+);
+
+export const DeleteEmployeeFailure = createAction(
+  '[Tracker] Delete Employee Failure',
+  props<{ error: any, pid: string | number }>()
+);

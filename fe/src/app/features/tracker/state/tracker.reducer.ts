@@ -309,6 +309,38 @@ export const reducer = createReducer(
       }
     }
   }),
+
+
+  // ...
+  // DELETE EMPLOYEE
+  // ...
+  on(TrackerActions.DeleteEmployee, (state: TrackerState, payload: { pid: string | number }) => {
+    return {
+      ...state,
+    }
+  }),
+  on(TrackerActions.DeleteEmployeeSuccess, (state: TrackerState, payload: { pid: string | number }) => {
+    let employees = state.company.retrieve.data.employees.filter((obj: any) => obj.id != payload.pid);
+
+    return {
+      ...state,
+      company: {
+        ...state.company,
+        retrieve: {
+          ...state.company.retrieve,
+          data: {
+            ...state.company.retrieve.data,
+            employees: employees,
+          }
+        }
+      }
+    }
+  }),
+  on(TrackerActions.DeleteEmployeeFailure, (state: TrackerState, payload: { error: any }) => {
+    return {
+      ...state,
+    }
+  }),
 );
 
 export function TrackerReducer(state: TrackerState | undefined, action: Action) {

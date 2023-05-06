@@ -300,4 +300,43 @@ export class TrackerEffects {
     ), { dispatch: false }
   )
 
+
+  // ...
+  // DELETE EMPLOYEE
+  // ...
+  deleteEmployee$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TrackerActions.DeleteEmployee),
+      mergeMap((payload: { pid: string | number }) => {
+        return this.trackerService.DeleteEmployee(payload.pid).pipe(
+          map(() => {
+            return TrackerActions.DeleteEmployeeSuccess({ pid: payload.pid });
+          }),
+          catchError((err: HttpErrorResponse) => {
+            return of(TrackerActions.DeleteEmployeeFailure({ error: err, pid: payload.pid }));
+          })
+        )
+      })
+    )
+  )
+
+  deleteEmployeeSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TrackerActions.DeleteEmployeeSuccess),
+      map(data => {
+        console.log(data);
+      })
+    ), { dispatch: false }
+  )
+
+  deleteEmployeeFailure$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TrackerActions.DeleteEmployeeFailure),
+      map(({ error }) => {
+        console.log(error);
+        this.handleError(error);
+      })
+    ), { dispatch: false }
+  )
+
 }

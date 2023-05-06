@@ -39,6 +39,12 @@ class SubmitEmployeeSerializer(BaseEmployeeSerializer):
 
         return instance
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data.update({'roles': instance.roles.values_list('name', flat=True)})
+
+        return data
+
 
 """
 COMPANY

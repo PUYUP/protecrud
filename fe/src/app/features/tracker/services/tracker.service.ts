@@ -47,4 +47,9 @@ export class TrackerService {
     return this.httpClient.patch(ENDPOINT, payload);
   }
 
+  public DeleteEmployee(pid: string | number): Observable<any> {
+    const ENDPOINT = `${environment.apiUrl}/tracker/v1/employees/${pid}/`;
+    return this.httpClient.delete(ENDPOINT);
+  }
+
 }
