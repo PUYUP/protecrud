@@ -1,0 +1,34 @@
+<table mat-table [dataSource]="props.data" class="mat-elevation-z1">
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let element"> {{ element.employee_name }} </td>
+  </ng-container>
+
+  <!-- Roles Column -->
+  <ng-container matColumnDef="roles">
+    <th mat-header-cell *matHeaderCellDef> Roles </th>
+    <td mat-cell *matCellDef="let element"> 
+		<mat-chip-listbox>
+			<ng-container *ngFor="let role of element.roles">
+				<mat-chip class="text-fsxs">{{ role }}</mat-chip>
+			</ng-container>
+		</mat-chip-listbox>
+	</td>
+  </ng-container>
+
+  <!-- Join Date -->
+  <ng-container matColumnDef="create_at">
+    <th mat-header-cell *matHeaderCellDef> Join Date </th>
+    <td mat-cell *matCellDef="let element"> {{ element.create_at | date: 'd LLL YYYY' }} </td>
+  </ng-container>
+
+  <!-- Action Column -->
+  <ng-container matColumnDef="action">
+    <th mat-header-cell *matHeaderCellDef> Action </th>
+    <td mat-cell *matCellDef="let element"> {{ element.symbol }} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

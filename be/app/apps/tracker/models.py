@@ -1,7 +1,9 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import Group
+
+User = get_user_model()
 
 
 class Company(models.Model):
@@ -32,7 +34,7 @@ class Employee(models.Model):
     roles = models.ManyToManyField(Group)
 
     def __str__(self) -> str:
-        return self.user.first_name
+        return self.user.full_name
 
 
 class Asset(models.Model):

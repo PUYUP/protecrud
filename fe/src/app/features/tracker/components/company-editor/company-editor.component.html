@@ -1,0 +1,10 @@
+<div class="p-8">
+	<div class="flex items-center mb-5">
+		<div class="text-lg">{{ data?.name ? 'Edit' : 'Add' }} Company</div>
+		<div class="ml-auto">
+			<button type="button" color="warn" mat-button (click)="cancelHandler()">Cancel</button>
+		</div>
+	</div>
+
+	<tracker-company-editor-form [props]="{'data': data}"></tracker-company-editor-form>
+</div>

@@ -1,0 +1,25 @@
+<section>
+	<div class="text-lg mb-5">Company Detail</div>
+
+	<table class="flat-table w-full xl:w-2/5 lg:w-3/5">
+		<tr>
+			<td>Name</td>
+			<td class="pl-4 font-semibold">{{ props.data.name }}</td>
+		</tr>
+
+		<tr>
+			<td>Description</td>
+			<td class="pl-4">{{ props.data.description }}</td>
+		</tr>
+
+		<tr>
+			<td>Create At</td>
+			<td class="pl-4">{{ props.data.create_at | date: 'd LLL YYYY HH:mm' }}</td>
+		</tr>
+
+		<tr>
+			<td>Update At</td>
+			<td class="pl-4">{{ props.data.update_at | date: 'd LLL YYYY HH:mm' }}</td>
+		</tr>
+	</table>
+</section>

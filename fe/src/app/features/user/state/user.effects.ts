@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as UserActions from './user.actions';
 import { catchError, map, mergeMap, of } from 'rxjs';
-import { AuthService } from '../service';
+import { AuthService } from '../services';
 import Swal from 'sweetalert2'
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -52,7 +52,7 @@ export class UserEffects {
       ofType(UserActions.AuthenticationSuccess),
       map(data => {
         console.log(data);
-        this.authService.SaveToken(data);
+        this.authService.SaveToken(data.data);
         this.router.navigate(['/tracker'], { replaceUrl: true });
       })
     ), { dispatch: false }

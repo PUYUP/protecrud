@@ -1,0 +1,29 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmitHandler()">
+	<ng-container *ngIf="company$ | async as company">
+		<mat-form-field appearance="outline" class="w-full">
+			<mat-label>Company Name</mat-label>
+			<input matInput formControlName="name" placeholder="Eg: Google Inc.">
+		</mat-form-field>
+
+		<mat-form-field appearance="outline" class="w-full">
+			<mat-label>Description</mat-label>
+			<textarea 
+				matInput 
+				formControlName="description"
+				placeholder="About the company" 
+				cdkTextareaAutosize
+				cdkAutosizeMinRows="3"
+				cdkAutosizeMaxRows="5"
+			></textarea>
+		</mat-form-field>
+
+		<div>
+			<button 
+				type="submit" 
+				mat-raised-button 
+				color="primary" 
+				[disabled]="formGroup.invalid || company.status == 'loading'"
+			>Submit</button>
+		</div>
+	</ng-container>
+</form>

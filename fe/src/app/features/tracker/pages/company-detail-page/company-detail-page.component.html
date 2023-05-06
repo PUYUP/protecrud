@@ -1,0 +1,15 @@
+<ng-container *ngIf="company$ | async as company">
+	<ng-container *ngIf="company.status === 'loaded'">
+		<tracker-company-detail [props]="{'data': company.data}"></tracker-company-detail>
+
+		<section class="mt-5">
+			<div class="text-lg mb-4 flex items-center">
+				<div>Employees</div>
+				<div class="ml-auto">
+					<button mat-raised-button color="primary" (click)="addEmployeeHandler()">Add Employee</button>
+				</div>
+			</div>
+			<tracker-employee-list [props]="{'data': company.data.employees}"></tracker-employee-list>
+		</section>
+	</ng-container>
+</ng-container>
