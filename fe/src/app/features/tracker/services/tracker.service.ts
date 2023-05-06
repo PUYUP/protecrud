@@ -42,4 +42,9 @@ export class TrackerService {
     return this.httpClient.post(ENDPOINT, payload);
   }
 
+  public UpdateEmployee(pid: string | number, payload: any): Observable<any> {
+    const ENDPOINT = `${environment.apiUrl}/tracker/v1/employees/${pid}/`;
+    return this.httpClient.patch(ENDPOINT, payload);
+  }
+
 }

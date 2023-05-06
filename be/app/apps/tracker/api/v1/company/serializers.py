@@ -27,6 +27,18 @@ class SubmitEmployeeSerializer(BaseEmployeeSerializer):
     class Meta(BaseEmployeeSerializer.Meta):
         fields = ['company', 'user', 'roles']
 
+    @transaction.atomic
+    def create(self, validated_data):
+        user = validated_data.pop('user')
+        company = validated_data.pop('company')
+        roles = validated_data.pop('roles')
+
+        instance, created = self.Meta.model.objects.get_or_create(
+            user=user, company=company)
+        instance.roles.set(roles)
+
+        return instance
+
 
 """
 COMPANY

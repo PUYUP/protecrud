@@ -261,4 +261,43 @@ export class TrackerEffects {
     ), { dispatch: false }
   )
 
+
+  // ...
+  // UPDATE EMPLOYEE
+  // ...
+  updateEmployee$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TrackerActions.UpdateEmployee),
+      mergeMap((payload: { pid: string | number, data: { roles: number[] } }) => {
+        return this.trackerService.UpdateEmployee(payload.pid, payload.data).pipe(
+          map((response: any) => {
+            return TrackerActions.UpdateEmployeeSuccess({ data: response });
+          }),
+          catchError((err: HttpErrorResponse) => {
+            return of(TrackerActions.UpdateEmployeeFailure({ error: err }));
+          })
+        )
+      })
+    )
+  )
+
+  updateEmployeeSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TrackerActions.UpdateEmployeeSuccess),
+      map(data => {
+        console.log(data);
+      })
+    ), { dispatch: false }
+  )
+
+  updateEmployeeFailure$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TrackerActions.UpdateEmployeeFailure),
+      map(({ error }) => {
+        console.log(error);
+        this.handleError(error);
+      })
+    ), { dispatch: false }
+  )
+
 }

@@ -3,6 +3,7 @@ from django.contrib.auth.models import Group, AbstractUser
 
 
 class User(AbstractUser):
+    @property
     def full_name(self) -> str:
         if self.first_name:
             return f'{self.first_name} {self.last_name}'

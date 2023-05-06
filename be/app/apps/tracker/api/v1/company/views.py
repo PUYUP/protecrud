@@ -1,4 +1,5 @@
 from django.db import transaction
+from django.db.models import Count
 from django.core.exceptions import ValidationError as DjangoValidationError, ObjectDoesNotExist
 from django.utils.encoding import smart_str
 from django.utils.translation import gettext_lazy as _
@@ -8,7 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError, NotFound
 
-from apps.tracker.models import Company
+from apps.tracker.models import Company, Employee
 from .serializers import ListCompanySerializer, RetrieveCompanySerializer, SubmitCompanySerializer, SubmitEmployeeSerializer
 
 
@@ -34,13 +35,24 @@ class CompanyViewSet(ViewSet):
 
         # show companies only for Employee (all Roles)
         groups = current_user.groups.values_list('name', flat=True)
-        queryset = queryset.filter(employees__roles__name__in=groups)
+        queryset = queryset.filter(employees__roles__name__in=groups) \
+            .annotate(count=Count('id')) \
+            .order_by()
 
         return queryset
 
-    def get_instance(self, pk):
-        queryset = self.queryset_authorization().get(id=pk)
-        return queryset
+    def get_instance(self, pk, for_update=False):
+        queryset = self.queryset_authorization()
+        if for_update:
+            queryset = queryset.select_for_update()
+
+        return queryset.get(id=pk)
+
+    def get_instance_or_notfound(self, pk, for_update=False):
+        try:
+            return self.get_instance(pk, for_update)
+        except ObjectDoesNotExist:
+            raise NotFound()
 
     def list(self, request):
         instances = self.queryset_authorization()
@@ -50,11 +62,7 @@ class CompanyViewSet(ViewSet):
         return Response(serializer.data, status=res_status.HTTP_200_OK)
 
     def retrieve(self, request, pk):
-        try:
-            instance = self.get_instance(pk)
-        except ObjectDoesNotExist:
-            raise NotFound()
-
+        instance = self.get_instance_or_notfound(pk)
         serializer = RetrieveCompanySerializer(instance, context=self.context)
         return Response(serializer.data, status=res_status.HTTP_200_OK)
 
@@ -72,11 +80,7 @@ class CompanyViewSet(ViewSet):
 
     @transaction.atomic
     def partial_update(self, request, pk):
-        try:
-            instance = self.get_instance(pk)
-        except ObjectDoesNotExist:
-            raise NotFound()
-
+        instance = self.get_instance_or_notfound(pk, True)
         serializer = SubmitCompanySerializer(
             instance=instance, data=request.data, context=self.context)
         if serializer.is_valid(raise_exception=True):
@@ -89,11 +93,7 @@ class CompanyViewSet(ViewSet):
 
     @transaction.atomic
     def destroy(self, request, pk):
-        try:
-            instance = self.get_instance(pk)
-        except ObjectDoesNotExist:
-            raise NotFound()
-
+        instance = self.get_instance_or_notfound(pk, True)
         instance.delete()
 
         return Response({'detail': _("Delete success!")}, status=res_status.HTTP_204_NO_CONTENT)
@@ -102,10 +102,43 @@ class CompanyViewSet(ViewSet):
 class EmployeeViewSet(ViewSet):
     permission_classes = (IsAuthenticated,)
 
+    def queryset(self):
+        qs = Employee.objects \
+            .prefetch_related('roles') \
+            .select_related('user', 'company')
+
+        return qs
+
+    def get_instance(self, pk, for_update=False):
+        queryset = self.queryset()
+        if for_update:
+            queryset = queryset.select_for_update()
+
+        return queryset.get(id=pk)
+
+    def get_instance_or_notfound(self, pk, for_update=False):
+        try:
+            return self.get_instance(pk, for_update)
+        except ObjectDoesNotExist:
+            raise NotFound()
+
     @transaction.atomic
     def create(self, request):
         serializer = SubmitEmployeeSerializer(
             data=request.data, context=self.context)
+        if serializer.is_valid(raise_exception=True):
+            try:
+                serializer.save()
+            except (ValueError, DjangoValidationError) as error:
+                raise ValidationError(detail=smart_str(error))
+            return Response(serializer.data, status=res_status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=res_status.HTTP_403_FORBIDDEN)
+
+    @transaction.atomic
+    def partial_update(self, request, pk):
+        instance = self.get_instance_or_notfound(pk, True)
+        serializer = SubmitEmployeeSerializer(
+            instance=instance, data=request.data, context=self.context)
         if serializer.is_valid(raise_exception=True):
             try:
                 serializer.save()

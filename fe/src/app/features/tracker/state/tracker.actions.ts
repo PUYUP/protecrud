@@ -111,3 +111,22 @@ export const SubmitEmployeeFailure = createAction(
   '[Tracker] Submit Employee Failure',
   props<{ error: any }>()
 );
+
+
+// ...
+// UPDATE EMPLOYEE
+// ...
+export const UpdateEmployee = createAction(
+  '[Tracker] Update Employee',
+  props<{ pid: string | number, data: { roles: number[] } }>()
+);
+
+export const UpdateEmployeeSuccess = createAction(
+  '[Tracker] Update Employee Success',
+  props<{ data: any }>()
+);
+
+export const UpdateEmployeeFailure = createAction(
+  '[Tracker] Update Employee Failure',
+  props<{ error: any }>()
+);
