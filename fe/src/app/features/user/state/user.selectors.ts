@@ -9,3 +9,17 @@ export const SelectAuthentication = createSelector(
 		return state.authentication;
 	}
 );
+
+export const SelectGroups = createSelector(
+	SelectUserFeatureKey,
+	(state: UserState) => {
+		return state.groups;
+	}
+);
+
+export const SelectUsers = createSelector(
+	SelectUserFeatureKey,
+	(state: UserState) => {
+		return state.users;
+	}
+);

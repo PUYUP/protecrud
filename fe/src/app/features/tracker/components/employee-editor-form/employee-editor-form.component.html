@@ -1,1 +1,19 @@
-<p>employee-editor-form works!</p>
+<form>
+	<mat-form-field appearance="outline" class="w-full">
+		<mat-label>User</mat-label>
+		<mat-select>
+			<ng-container *ngIf="users$ | async as users">
+				<mat-option *ngFor="let user of users.data.results" [value]="user.id">{{ user.full_name }}</mat-option>
+			</ng-container>
+		</mat-select>
+	</mat-form-field>
+
+	<mat-form-field appearance="outline" class="w-full">
+		<mat-label>Roles</mat-label>
+		<mat-select multiple>
+			<ng-container *ngIf="groups$ | async as groups">
+				<mat-option *ngFor="let group of groups.data.results" [value]="group.id">{{ group.name }}</mat-option>
+			</ng-container>
+		</mat-select>
+	</mat-form-field>
+</form>

@@ -68,4 +68,82 @@ export class UserEffects {
     ), { dispatch: false }
   )
 
+
+  // ...
+  // LOAD GROUPS
+  // ...
+  loadGroups$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserActions.LoadGroups),
+      mergeMap(() => {
+        return this.authService.LoadGroups().pipe(
+          map((response: any) => {
+            return UserActions.LoadGroupsSuccess({ data: response });
+          }),
+          catchError((err: HttpErrorResponse) => {
+            return of(UserActions.LoadGroupsFailure({ error: err }));
+          })
+        )
+      })
+    )
+  )
+
+  loadGroupsSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserActions.LoadGroupsSuccess),
+      map(data => {
+        console.log(data);
+      })
+    ), { dispatch: false }
+  )
+
+  loadGroupsFailure$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserActions.LoadGroupsFailure),
+      map(({ error }) => {
+        console.log(error);
+        this.handleError(error);
+      })
+    ), { dispatch: false }
+  )
+
+
+  // ...
+  // LOAD USERS
+  // ...
+  loadUsers$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserActions.LoadUsers),
+      mergeMap(() => {
+        return this.authService.LoadUsers().pipe(
+          map((response: any) => {
+            return UserActions.LoadUsersSuccess({ data: response });
+          }),
+          catchError((err: HttpErrorResponse) => {
+            return of(UserActions.LoadUsersFailure({ error: err }));
+          })
+        )
+      })
+    )
+  )
+
+  loadUsersSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserActions.LoadUsersSuccess),
+      map(data => {
+        console.log(data);
+      })
+    ), { dispatch: false }
+  )
+
+  loadUsersFailure$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserActions.LoadUsersFailure),
+      map(({ error }) => {
+        console.log(error);
+        this.handleError(error);
+      })
+    ), { dispatch: false }
+  )
+
 }

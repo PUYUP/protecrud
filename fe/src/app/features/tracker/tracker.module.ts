@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatSelectModule } from '@angular/material/select';
 
 import { TrackerRoutingModule } from './tracker-routing.module';
 import { IndexPageComponent } from './pages/index-page/index-page.component';
@@ -68,6 +69,7 @@ import { EmployeeEditorFormComponent } from './components/employee-editor-form/e
     MatSnackBarModule,
     MatTooltipModule,
     MatChipsModule,
+    MatSelectModule,
   ],
   providers: [
     CdkColumnDef

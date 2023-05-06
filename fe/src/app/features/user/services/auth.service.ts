@@ -12,6 +12,16 @@ export class AuthService {
     private httpClient: HttpClient
   ) { }
 
+  public LoadGroups(): Observable<any[]> {
+    const ENDPOINT = `${environment.apiUrl}/user/v1/groups/`;
+    return this.httpClient.get<any[]>(ENDPOINT);
+  }
+
+  public LoadUsers(): Observable<any[]> {
+    const ENDPOINT = `${environment.apiUrl}/user/v1/users/`;
+    return this.httpClient.get<any[]>(ENDPOINT);
+  }
+
   public Authentication(payload: { username: string, password: string }): Observable<any> {
     const ENDPOINT = `${environment.apiUrl}/user/v1/authentication/`;
     return this.httpClient.post(ENDPOINT, payload);

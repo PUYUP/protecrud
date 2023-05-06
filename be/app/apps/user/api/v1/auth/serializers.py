@@ -1,7 +1,10 @@
 from django.contrib.auth.models import Group
+from django.contrib.auth import get_user_model
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
+
+User = get_user_model()
 
 
 class AuthenticationSerializer(TokenObtainPairSerializer):
@@ -14,7 +17,13 @@ class AuthenticationSerializer(TokenObtainPairSerializer):
         return data
 
 
-class GroupSerializer(serializers.ModelSerializer):
+class GroupListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
         fields = '__all__'
+
+
+class UserListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'full_name']
