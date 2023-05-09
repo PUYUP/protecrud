@@ -1,5 +1,8 @@
 <header class="bg-blue-500 text-white">
-	<div class="py-4 px-10">
+	<div class="py-4 px-10 flex">
 		<a class="text-lg font-semibold no-underline text-white" [routerLink]="['/tracker']">Company Assets Tracker</a>
+		<div class="ml-auto">
+			<button mat-raised-button (click)="logOutHandler()">Log Out</button>
+		</div>
 	</div>
 </header>

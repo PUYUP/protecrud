@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
@@ -38,6 +38,15 @@ export class AuthService {
 
   public get IsAuthenticated(): boolean {
     return this.GetToken() !== null;
+  }
+
+  public ClearToken(): void {
+    localStorage.clear();
+  }
+
+  public LogOut(): Observable<any> {
+    this.ClearToken();
+    return of('OK!');
   }
 
 }

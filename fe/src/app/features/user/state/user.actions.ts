@@ -53,3 +53,21 @@ export const LoadUsersFailure = createAction(
   '[User] Load Users Failure',
   props<{ error: any }>()
 );
+
+
+// ...
+// LOGOUT
+// ...
+export const LogOut = createAction(
+  '[User] Log Out'
+);
+
+export const LogOutSuccess = createAction(
+  '[User] Log Out Success',
+  props<{ data: any }>()
+);
+
+export const LogOutFailure = createAction(
+  '[User] Log Out Failure',
+  props<{ error: any }>()
+);

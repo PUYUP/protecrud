@@ -146,4 +146,44 @@ export class UserEffects {
     ), { dispatch: false }
   )
 
+
+  // ...
+  // LOGOUT
+  // ...
+  logOut$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserActions.LogOut),
+      mergeMap(() => {
+        return this.authService.LogOut().pipe(
+          map((response: any) => {
+            return UserActions.LogOutSuccess({ data: response });
+          }),
+          catchError((err: HttpErrorResponse) => {
+            return of(UserActions.LogOutFailure({ error: err }));
+          })
+        )
+      })
+    )
+  )
+
+  logOutSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserActions.LogOutSuccess),
+      map(data => {
+        console.log(data);
+        this.router.navigate(['/user/authentication']);
+      })
+    ), { dispatch: false }
+  )
+
+  logOutFailure$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserActions.LogOutFailure),
+      map(({ error }) => {
+        console.log(error);
+        this.handleError(error);
+      })
+    ), { dispatch: false }
+  )
+
 }

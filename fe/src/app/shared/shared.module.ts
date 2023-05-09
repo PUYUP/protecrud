@@ -4,6 +4,7 @@ import { DashboardFooterComponent } from './components/dashboard-footer/dashboar
 import { DashboardHeaderComponent } from './components/dashboard-header/dashboard-header.component';
 import { RouterModule } from '@angular/router';
 
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
@@ -22,6 +23,8 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     RouterModule,
+
+    MatButtonModule,
   ]
 })
 export class SharedModule { }
