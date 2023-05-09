@@ -1,5 +1,14 @@
 <section class="p-12">
 	<div class="xl:w-2/5 ld:w-3/5 md:w-3/5 w-5/5 mx-auto">
 		<user-authentication-form></user-authentication-form>
+
+		<mat-card class="mt-5">
+			<mat-card-content>
+				<p>Don't have account?</p>
+				<div class="mt-4">
+					<button type="button" mat-raised-button color="primary" class="w-full" [routerLink]="['/user/signup']">Register Here</button>
+				</div>
+			</mat-card-content>
+		</mat-card>
 	</div>
 </section>

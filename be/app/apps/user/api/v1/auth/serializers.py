@@ -26,3 +26,13 @@ class UserListSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'full_name']
+
+
+class SignUpSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'password']
+        extra_kwargs = {
+            'last_name': {'required': False, 'allow_null': True},
+            'password': {'required': True, 'allow_null': False, 'write_only': True},
+        }

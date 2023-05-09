@@ -149,7 +149,43 @@ export const reducer = createReducer(
         error: payload.error,
       }
     }
-  })
+  }),
+
+
+  // ...
+  // SIGNUP
+  // ...
+  on(UserActions.SignUp, (state: UserState) => {
+    return {
+      ...state,
+      authentication: {
+        ...state.authentication,
+        status: LOADING,
+        error: null,
+      }
+    }
+  }),
+  on(UserActions.SignUpSuccess, (state: UserState) => {
+    return {
+      ...state,
+      authentication: {
+        ...state.authentication,
+        status: LOADED,
+        error: null,
+      }
+    }
+  }),
+  on(UserActions.SignUpFailure, (state: UserState, payload: { error: any }) => {
+    return {
+      ...state,
+      authentication: {
+        ...state.authentication,
+        status: IDLE,
+        error: payload.error,
+        data: null,
+      }
+    }
+  }),
 );
 
 export function UserReducer(state: UserState | undefined, action: Action) {

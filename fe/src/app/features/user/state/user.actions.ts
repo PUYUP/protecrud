@@ -71,3 +71,22 @@ export const LogOutFailure = createAction(
   '[User] Log Out Failure',
   props<{ error: any }>()
 );
+
+
+// ...
+// SIGNUP
+// ...
+export const SignUp = createAction(
+  '[User] Sign Up',
+  props<{ data: { username: string; first_name: string; last_name?: string; password: string }}>()
+);
+
+export const SignUpSuccess = createAction(
+  '[User] Sign Up Success',
+  props<{ data: any }>()
+);
+
+export const SignUpFailure = createAction(
+  '[User] Sign Up Failure',
+  props<{ error: any }>()
+);

@@ -10,15 +10,20 @@ import { MatCardModule } from '@angular/material/card';
 import { UserRoutingModule } from './user-routing.module';
 import { AuthenticationPageComponent } from './pages/authentication-page/authentication-page.component';
 import { AuthenticationFormComponent } from './components/authentication-form/authentication-form.component';
+import { SignupFormComponent } from './components/signup-form/signup-form.component';
+import { SignupPageComponent } from './pages/signup-page/signup-page.component';
 
 
 @NgModule({
   declarations: [
     AuthenticationPageComponent,
-    AuthenticationFormComponent
+    AuthenticationFormComponent,
+    SignupFormComponent,
+    SignupPageComponent
   ],
   entryComponents: [
-    AuthenticationFormComponent
+    AuthenticationFormComponent,
+    SignupFormComponent,
   ],
   imports: [
     CommonModule,

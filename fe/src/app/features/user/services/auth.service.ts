@@ -22,6 +22,11 @@ export class AuthService {
     return this.httpClient.get<any[]>(ENDPOINT);
   }
 
+  public SignUp(payload: any = {}): Observable<any> {
+    const ENDPOINT = `${environment.apiUrl}/user/v1/users/signup/`;
+    return this.httpClient.post<any>(ENDPOINT, payload);
+  }
+
   public Authentication(payload: { username: string, password: string }): Observable<any> {
     const ENDPOINT = `${environment.apiUrl}/user/v1/authentication/`;
     return this.httpClient.post(ENDPOINT, payload);

@@ -35,7 +35,7 @@ class CompanyViewSet(ViewSet):
 
         # show companies only for Employee (all Roles)
         groups = current_user.groups.values_list('name', flat=True)
-        queryset = queryset.filter(employees__roles__name__in=groups) \
+        queryset = queryset.filter(employees__roles__name__in=groups, employees__user_id=current_user.id) \
             .annotate(count=Count('id')) \
             .order_by()
 

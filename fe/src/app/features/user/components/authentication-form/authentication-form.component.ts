@@ -28,7 +28,7 @@ export class AuthenticationFormComponent implements OnInit {
     });
   }
 
-  handleSubmit(): void {
+  submitHandler(): void {
     this.store.dispatch(Authentication({ data: this.formGroup.value }));
   }
 

@@ -186,4 +186,52 @@ export class UserEffects {
     ), { dispatch: false }
   )
 
+
+  // ...
+  // SIGNUP
+  // ...
+  signUp$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserActions.SignUp),
+      mergeMap((payload: { data: any }) => {
+        return this.authService.SignUp(payload.data).pipe(
+          map((response: any) => {
+            return UserActions.SignUpSuccess({ data: response });
+          }),
+          catchError((err: HttpErrorResponse) => {
+            return of(UserActions.SignUpFailure({ error: err }));
+          })
+        )
+      })
+    )
+  )
+
+  signUpSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserActions.SignUpSuccess),
+      map(data => {
+        console.log(data);
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Now authentication with Username and Password',
+          showConfirmButton: true,
+          allowOutsideClick: false,
+        }).then(() => {
+          this.router.navigate(['/user/authentication']);
+        });
+      })
+    ), { dispatch: false }
+  )
+
+  signUpFailure$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserActions.SignUpFailure),
+      map(({ error }) => {
+        console.log(error);
+        this.handleError(error);
+      })
+    ), { dispatch: false }
+  )
+
 }

@@ -6,7 +6,7 @@
       color="primary" 
       class="w-36" 
       (click)="addEmployeeHandler()" 
-      [disabled]="!roles.includes('Admin')"
+      [disabled]="!props.company.my_roles.includes('Admin')"
     >Add Employee</button>
   </div>
 </div>
@@ -52,7 +52,7 @@
       </div>
 
       <ng-template #actions>
-        <div *ngIf="roles.includes('Admin')" class="flex justify-center gap-3">
+        <div *ngIf="props.company.my_roles.includes('Admin')" class="flex justify-center gap-3">
           <button mat-icon-button color="warn" (click)="deleteHandler(element.id)" matTooltip="Delete">
             <mat-icon>delete_forever</mat-icon>
           </button>
