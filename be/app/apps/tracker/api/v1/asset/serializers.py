@@ -21,7 +21,7 @@ class SubmitAssetSerializer(BaseAssetSerializer):
 
     class Meta(BaseAssetSerializer.Meta):
         fields = ['id', 'created_by', 'company', 'name',
-                  'amount', 'condition', 'description']
+                  'quantity', 'condition', 'description']
         ekstra_kwargs = {
             'id': {'read_only': True}
         }
@@ -30,8 +30,8 @@ class SubmitAssetSerializer(BaseAssetSerializer):
     def create(self, validated_data):
         defaults = {
             'description': validated_data.pop('description'),
-            'amount': validated_data.pop('amount', 0),
-            'condition': validated_data.pop('condtion', self.Meta.model.Condition.UNKNOWN),
+            'quantity': validated_data.pop('quantity', 0),
+            'condition': validated_data.pop('condition', self.Meta.model.Condition.UNKNOWN),
         }
 
         instance, updated = self.Meta.model.objects \

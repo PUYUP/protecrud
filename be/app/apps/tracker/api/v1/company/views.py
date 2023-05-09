@@ -140,7 +140,7 @@ class EmployeeViewSet(ViewSet):
 
         # super admin a.k.a company creator can't delete
         if instance.is_super_admin:
-            return Response({'detail': _("Cant update super admin")})
+            return Response({'detail': _("Cant update super admin")}, status=res_status.HTTP_403_FORBIDDEN)
 
         serializer = SubmitEmployeeSerializer(
             instance=instance, data=request.data, context=self.context)
@@ -158,7 +158,7 @@ class EmployeeViewSet(ViewSet):
 
         # super admin a.k.a company creator can't delete
         if instance.is_super_admin:
-            return Response({'detail': _("Cant delete super admin")})
+            return Response({'detail': _("Cant delete super admin")}, status=res_status.HTTP_403_FORBIDDEN)
 
         instance.delete()
 

@@ -1,1 +1,65 @@
-<p>asset-list works!</p>
+<div class="text-lg mb-4 flex items-center">
+  <div>Assets</div>
+  <div class="ml-auto">
+    <button mat-raised-button color="primary" class="w-36" (click)="addAssetHandler()">Add Asset</button>
+  </div>
+</div>
+
+<table mat-table [dataSource]="props.data" class="mat-elevation-z1">
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
+  </ng-container>
+
+  <!-- Quantity Column -->
+  <ng-container matColumnDef="quantity">
+    <th mat-header-cell *matHeaderCellDef> Quantity</th>
+    <td mat-cell *matCellDef="let element"> {{ element.quantity }}</td>
+  </ng-container>
+
+  <!-- Condition Column -->
+  <ng-container matColumnDef="condition">
+    <th mat-header-cell *matHeaderCellDef [ngClass]="{'hidden': getScreenWidth <= 768}"> Condition</th>
+    <td mat-cell *matCellDef="let element" [ngClass]="{'hidden': getScreenWidth <= 768}"> 
+		<span *ngIf="element.condition === 'unknown'">Unknown</span>
+		<span *ngIf="element.condition === 'good'" class="text-green-600">Good</span>
+		<span *ngIf="element.condition === 'bad'" class="text-red-600">Bad</span>
+	</td>
+  </ng-container>
+
+  <!-- Description Column -->
+  <ng-container matColumnDef="description">
+    <th mat-header-cell *matHeaderCellDef [ngClass]="{'hidden': getScreenWidth <= 768}"> Description </th>
+    <td mat-cell *matCellDef="let element" [ngClass]="{'hidden': getScreenWidth <= 768}"> 
+		<div [innerHTML]="element.description"></div>
+	</td>
+  </ng-container>
+
+  <!-- Action Column -->
+  <ng-container matColumnDef="action">
+    <th mat-header-cell *matHeaderCellDef class="!text-center w-28"> Action </th>
+    <td mat-cell *matCellDef="let element"> 
+      <div *ngIf="element.is_super_admin else actions" class="w-28">
+        <div class="text-center leading-4">
+          No action allowed
+        </div>
+      </div>
+
+      <ng-template #actions>
+        <div class="flex justify-center gap-3">
+          <button mat-icon-button color="warn" (click)="deleteHandler(element.id)" matTooltip="Delete">
+            <mat-icon>delete_forever</mat-icon>
+          </button>
+
+          <button mat-icon-button (click)="editHandler(element)" matTooltip="Update">
+            <mat-icon>edit_note</mat-icon>
+          </button>
+        </div>
+      </ng-template>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

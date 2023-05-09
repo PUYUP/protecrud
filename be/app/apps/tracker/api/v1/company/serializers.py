@@ -3,6 +3,7 @@ from django.db import transaction
 from rest_framework import serializers
 
 from apps.tracker.models import *
+from ..asset.serializers import ListAssetSerializer
 
 
 """
@@ -64,6 +65,7 @@ class ListCompanySerializer(BaseCompanySerializer):
 
 class RetrieveCompanySerializer(BaseCompanySerializer):
     employees = ListEmployeeSerializer(many=True)
+    assets = ListAssetSerializer(many=True)
 
     class Meta(BaseCompanySerializer.Meta):
         fields = '__all__'

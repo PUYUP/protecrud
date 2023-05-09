@@ -52,4 +52,19 @@ export class TrackerService {
     return this.httpClient.delete(ENDPOINT);
   }
 
+  public SubmitAsset(payload: any): Observable<any> {
+    const ENDPOINT = `${environment.apiUrl}/tracker/v1/assets/`;
+    return this.httpClient.post(ENDPOINT, payload);
+  }
+
+  public UpdateAsset(pid: string | number, payload: any): Observable<any> {
+    const ENDPOINT = `${environment.apiUrl}/tracker/v1/assets/${pid}/`;
+    return this.httpClient.patch(ENDPOINT, payload);
+  }
+
+  public DeleteAsset(pid: string | number): Observable<any> {
+    const ENDPOINT = `${environment.apiUrl}/tracker/v1/assets/${pid}/`;
+    return this.httpClient.delete(ENDPOINT);
+  }
+
 }

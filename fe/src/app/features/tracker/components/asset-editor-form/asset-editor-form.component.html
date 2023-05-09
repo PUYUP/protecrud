@@ -1,0 +1,34 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmitHandler()">
+	<mat-form-field appearance="outline" class="w-full">
+		<mat-label>Name</mat-label>
+		<input matInput formControlName="name" placeholder="A asset name">
+	</mat-form-field>
+
+	<mat-form-field appearance="outline" class="w-full">
+		<mat-label>Quantity</mat-label>
+		<input type="number" formControlName="quantity" matInput placeholder="How many this asset">
+	</mat-form-field>
+
+	<mat-form-field appearance="outline" class="w-full">
+		<mat-label>Condition</mat-label>
+		<mat-select formControlName="condition">
+			<mat-option value="unknown">Unknown</mat-option>
+			<mat-option value="good">Good</mat-option>
+			<mat-option value="bad">Bad</mat-option>
+		</mat-select>
+	</mat-form-field>
+
+	<mat-form-field appearance="outline" class="w-full">
+		<mat-label>Description</mat-label>
+		<textarea 
+			matInput 
+			 formControlName="description"
+			placeholder="About the asset" 
+			cdkTextareaAutosize
+			cdkAutosizeMinRows="3"
+			cdkAutosizeMaxRows="5"
+		></textarea>
+	</mat-form-field>
+
+	<button type="submit" mat-raised-button color="primary" [disabled]="formGroup.invalid">Submit</button>
+</form>

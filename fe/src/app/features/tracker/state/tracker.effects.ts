@@ -339,4 +339,124 @@ export class TrackerEffects {
     ), { dispatch: false }
   )
 
+
+
+
+
+  // ...
+  // SUBMIT ASSET
+  // ...
+  submitAsset$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TrackerActions.SubmitAsset),
+      mergeMap((payload: { data: { company: number; quantity: number, name: string; description?: string } }) => {
+        return this.trackerService.SubmitAsset(payload.data).pipe(
+          map((response: any) => {
+            return TrackerActions.SubmitAssetSuccess({ data: response });
+          }),
+          catchError((err: HttpErrorResponse) => {
+            return of(TrackerActions.SubmitAssetFailure({ error: err }));
+          })
+        )
+      })
+    )
+  )
+
+  submitAssetSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TrackerActions.SubmitAssetSuccess),
+      map(data => {
+        console.log(data);
+      })
+    ), { dispatch: false }
+  )
+
+  submitAssetFailure$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TrackerActions.SubmitAssetFailure),
+      map(({ error }) => {
+        console.log(error);
+        this.handleError(error);
+      })
+    ), { dispatch: false }
+  )
+
+
+  // ...
+  // UPDATE ASSET
+  // ...
+  updateAsset$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TrackerActions.UpdateAsset),
+      mergeMap((payload: { pid: string | number, data: { quantity: number, name: string; description?: string } }) => {
+        return this.trackerService.UpdateAsset(payload.pid, payload.data).pipe(
+          map((response: any) => {
+            return TrackerActions.UpdateAssetSuccess({ data: response });
+          }),
+          catchError((err: HttpErrorResponse) => {
+            return of(TrackerActions.UpdateAssetFailure({ error: err }));
+          })
+        )
+      })
+    )
+  )
+
+  updateAssetSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TrackerActions.UpdateAssetSuccess),
+      map(data => {
+        console.log(data);
+      })
+    ), { dispatch: false }
+  )
+
+  updateAssetFailure$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TrackerActions.UpdateAssetFailure),
+      map(({ error }) => {
+        console.log(error);
+        this.handleError(error);
+      })
+    ), { dispatch: false }
+  )
+
+
+  // ...
+  // DELETE ASSET
+  // ...
+  deleteAsset$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TrackerActions.DeleteAsset),
+      mergeMap((payload: { pid: string | number }) => {
+        return this.trackerService.DeleteAsset(payload.pid).pipe(
+          map(() => {
+            return TrackerActions.DeleteAssetSuccess({ pid: payload.pid });
+          }),
+          catchError((err: HttpErrorResponse) => {
+            return of(TrackerActions.DeleteAssetFailure({ error: err, pid: payload.pid }));
+          })
+        )
+      })
+    )
+  )
+
+  deleteAssetSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TrackerActions.DeleteAssetSuccess),
+      map(data => {
+        console.log(data);
+      })
+    ), { dispatch: false }
+  )
+
+  deleteAssetFailure$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TrackerActions.DeleteAssetFailure),
+      map(({ error }) => {
+        console.log(error);
+        this.handleError(error);
+      })
+    ), { dispatch: false }
+  )
+
 }

@@ -57,7 +57,7 @@ class Asset(models.Model):
         User, related_name='assets', on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
-    amount = models.IntegerField(default=0)
+    quantity = models.IntegerField(default=0)
     condition = models.CharField(
         max_length=15, choices=Condition.choices, default=Condition.UNKNOWN)
 

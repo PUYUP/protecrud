@@ -5,5 +5,9 @@
 		<section class="mt-5">
 			<tracker-employee-list [props]="{'data': company.data.employees, 'pid': pid}"></tracker-employee-list>
 		</section>
+
+		<section class="mt-10">
+			<tracker-asset-list [props]="{'data': company.data.assets, 'pid': pid}"></tracker-asset-list>
+		</section>
 	</ng-container>
 </ng-container>

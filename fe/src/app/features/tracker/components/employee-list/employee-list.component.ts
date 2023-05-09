@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, HostListener, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { EmployeeEditorComponent } from '../employee-editor/employee-editor.component';
 import Swal from 'sweetalert2';
@@ -14,10 +14,18 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class EmployeeListComponent {
 
+  @Input('props') props: any;
+  
+  @HostListener('window:resize', ['$event'])
+  onWindowResize() {
+    this.getScreenWidth = window.innerWidth;
+    this.getScreenHeight = window.innerHeight;
+  }
+
+  public getScreenWidth: any;
+  public getScreenHeight: any;
   private onDestroy$: Subject<boolean> | any = new Subject<boolean>;
   public displayedColumns: string[] = ['name', 'roles', 'create_at', 'action'];
-  
-  @Input('props') props: any;
 
   constructor(
     private dialog: MatDialog,

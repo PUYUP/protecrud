@@ -24,3 +24,9 @@ export const SelectEmployees = createSelector(
 	}
 );
 
+export const SelectAssets = createSelector(
+	SelectTrackerFeatureKey,
+	(state: TrackerState) => {
+		return state.assets;
+	}
+);

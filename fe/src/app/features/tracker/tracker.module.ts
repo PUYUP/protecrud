@@ -29,6 +29,8 @@ import { EmployeeListComponent } from './components/employee-list/employee-list.
 import { EmployeeEditorComponent } from './components/employee-editor/employee-editor.component';
 import { EmployeeEditorFormComponent } from './components/employee-editor-form/employee-editor-form.component';
 import { AssetListComponent } from './components/asset-list/asset-list.component';
+import { AssetEditorComponent } from './components/asset-editor/asset-editor.component';
+import { AssetEditorFormComponent } from './components/asset-editor-form/asset-editor-form.component';
 
 
 @NgModule({
@@ -44,7 +46,9 @@ import { AssetListComponent } from './components/asset-list/asset-list.component
     EmployeeListComponent,
     EmployeeEditorComponent,
     EmployeeEditorFormComponent,
-    AssetListComponent
+    AssetListComponent,
+    AssetEditorComponent,
+    AssetEditorFormComponent
   ],
   entryComponents: [
     CompanyListComponent,
@@ -56,6 +60,8 @@ import { AssetListComponent } from './components/asset-list/asset-list.component
     EmployeeEditorComponent,
     EmployeeEditorFormComponent,
     AssetListComponent,
+    AssetEditorComponent,
+    AssetEditorFormComponent
   ],
   imports: [
     CommonModule,

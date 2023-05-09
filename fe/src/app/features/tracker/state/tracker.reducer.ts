@@ -21,7 +21,12 @@ export interface TrackerState {
     data: any
     status: string
     error: any
-  }
+  },
+  assets: {
+    data: any
+    status: string
+    error: any
+  },
 }
 
 export const initialState: TrackerState = {
@@ -41,7 +46,12 @@ export const initialState: TrackerState = {
     data: null,
     status: IDLE,
     error: null,
-  }
+  },
+  assets: {
+    data: null,
+    status: IDLE,
+    error: null,
+  },
 };
 
 export const reducer = createReducer(
@@ -337,6 +347,73 @@ export const reducer = createReducer(
     }
   }),
   on(TrackerActions.DeleteEmployeeFailure, (state: TrackerState, payload: { error: any }) => {
+    return {
+      ...state,
+    }
+  }),
+
+
+  // ...
+  // SUBMIT ASSET
+  // ...
+  on(TrackerActions.SubmitAsset, (state: TrackerState) => {
+    return {
+      ...state,
+      assets: {
+        ...state.assets,
+        status: LOADING,
+      }
+    }
+  }),
+  on(TrackerActions.SubmitAssetSuccess, (state: TrackerState, payload: { data: any }) => {
+    return {
+      ...state,
+      assets: {
+        ...state.assets,
+        data: payload.data,
+        status: LOADED,
+        error: null,
+      }
+    }
+  }),
+  on(TrackerActions.SubmitAssetFailure, (state: TrackerState, payload: { error: any }) => {
+    return {
+      ...state,
+      assets: {
+        ...state.assets,
+        status: IDLE,
+        error: payload.error,
+      }
+    }
+  }),
+
+
+  // ...
+  // DELETE ASSET
+  // ...
+  on(TrackerActions.DeleteAsset, (state: TrackerState, payload: { pid: string | number }) => {
+    return {
+      ...state,
+    }
+  }),
+  on(TrackerActions.DeleteAssetSuccess, (state: TrackerState, payload: { pid: string | number }) => {
+    let assets = state.company.retrieve.data.assets.filter((obj: any) => obj.id != payload.pid);
+
+    return {
+      ...state,
+      company: {
+        ...state.company,
+        retrieve: {
+          ...state.company.retrieve,
+          data: {
+            ...state.company.retrieve.data,
+            assets: assets,
+          }
+        }
+      }
+    }
+  }),
+  on(TrackerActions.DeleteAssetFailure, (state: TrackerState, payload: { error: any }) => {
     return {
       ...state,
     }

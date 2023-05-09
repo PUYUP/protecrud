@@ -149,3 +149,60 @@ export const DeleteEmployeeFailure = createAction(
   '[Tracker] Delete Employee Failure',
   props<{ error: any, pid: string | number }>()
 );
+
+
+// ...
+// SUBMIT ASSET
+// ...
+export const SubmitAsset = createAction(
+  '[Tracker] Submit Asset',
+  props<{ data: { company: number; quantity: number, name: string; description?: string } }>()
+);
+
+export const SubmitAssetSuccess = createAction(
+  '[Tracker] Submit Asset Success',
+  props<{ data: any }>()
+);
+
+export const SubmitAssetFailure = createAction(
+  '[Tracker] Submit Asset Failure',
+  props<{ error: any }>()
+);
+
+
+// ...
+// UPDATE ASSET
+// ...
+export const UpdateAsset = createAction(
+  '[Tracker] Update Asset',
+  props<{ pid: string | number, data: { quantity: number, name: string; description?: string } }>()
+);
+
+export const UpdateAssetSuccess = createAction(
+  '[Tracker] Update Asset Success',
+  props<{ data: any }>()
+);
+
+export const UpdateAssetFailure = createAction(
+  '[Tracker] Update Asset Failure',
+  props<{ error: any }>()
+);
+
+
+// ...
+// DELETE ASSET
+// ...
+export const DeleteAsset = createAction(
+  '[Tracker] Delete Asset',
+  props<{ pid: string | number }>()
+);
+
+export const DeleteAssetSuccess = createAction(
+  '[Tracker] Delete Asset Success',
+  props<{ pid: string | number }>()
+);
+
+export const DeleteAssetFailure = createAction(
+  '[Tracker] Delete Asset Failure',
+  props<{ error: any, pid: string | number }>()
+);
