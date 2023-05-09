@@ -1,5 +1,4 @@
-from django.db import models
-from django.contrib.auth.models import Group, User
+from django.contrib.auth.models import User
 
 
 class User(User):
@@ -11,6 +10,3 @@ class User(User):
         if self.first_name:
             return f'{self.first_name} {self.last_name}'.strip()
         return self.username
-
-
-Group.add_to_class('is_default', models.BooleanField(default=False))

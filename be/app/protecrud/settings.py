@@ -25,12 +25,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-dre*c62lriz+-u430k=op07#-(sece_^84_zmfj(g1(+$#xa4='
+SECRET_KEY = os.environ.get(
+    'SECRET_KEY', 'django-insecure-dre*c62lriz+-u430k=op07#-(sece_^84_zmfj(g1(+$#xa4=')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = int(os.environ.get('DEBUG', default=1))
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = os.environ.get(
+    'ALLOWED_HOSTS', 'localhost 127.0.0.1 [::1]').split(' ')
 
 # sentry_sdk.init(
 #     dsn="https://ba44dbbfaab44fb69d666e6bbed2d1fc@o400235.ingest.sentry.io/4504926277599232",
@@ -59,8 +61,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
-    'apps.tracker.apps.TrackerConfig',
     'apps.user.apps.UserConfig',
+    'apps.tracker.apps.TrackerConfig',
 ]
 
 MIDDLEWARE = [

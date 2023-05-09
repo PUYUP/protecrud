@@ -12,7 +12,7 @@ then
 fi
 
 python manage.py migrate
-python manage.py collectstatic
 python manage.py create_group
+python manage.py collectstatic --noinput
 
 exec "$@"

@@ -14,11 +14,11 @@ services:
       - database
   frontend:
     build: ./fe/app
-    command: ng serve
     volumes:
       - ./fe/app/:/usr/src/protecrud/fe/
+      - /fe/node_modules
     ports:
-      - 4000:4000
+      - 4200:4200
     depends_on:
       - backend
   database:
@@ -26,10 +26,9 @@ services:
     volumes: 
       - postgres_data:/var/lib/postgresql/data/
     environment:
-      - POSTGRES_USER=webapi
+      - POSTGRES_USER=backend
       - POSTGRES_PASSWORD=V9rj0kmE#e0R
-      - POSTGRES_DB=webapi_dev
-  
+      - POSTGRES_DB=backend_dev
   
 volumes:
   postgres_data:

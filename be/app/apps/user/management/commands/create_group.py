@@ -15,10 +15,7 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         for group in self.group_data:
             group_name = group.get('name')
-            is_default = group_name == "User"
-
-            new_group, created = Group.objects \
-                .get_or_create(name=group_name, defaults={'is_default': is_default})
+            new_group, created = Group.objects.get_or_create(name=group_name)
 
             if new_group:
                 self.stdout.write(

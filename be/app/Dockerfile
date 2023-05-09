@@ -2,7 +2,7 @@
 FROM python:3.9.13
 
 # set work directory
-WORKDIR /usr/src/protecrud
+WORKDIR /usr/src/protecrud/be
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -19,11 +19,11 @@ RUN pip install -r requirements.txt
 
 # copy entrypoint.sh
 COPY ./entrypoint.sh .
-RUN sed -i 's/\r$//g' /usr/src/protecrud/entrypoint.sh
-RUN chmod +x /usr/src/protecrud/entrypoint.sh
+RUN sed -i 's/\r$//g' /usr/src/protecrud/be/entrypoint.sh
+RUN chmod +x /usr/src/protecrud/be/entrypoint.sh
 
 # copy project
 COPY . .
 
 # run entrypoint.sh
-ENTRYPOINT ["/usr/src/protecrud/entrypoint.sh"]
+ENTRYPOINT ["/usr/src/protecrud/be/entrypoint.sh"]
