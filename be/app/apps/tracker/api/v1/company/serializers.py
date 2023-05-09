@@ -18,7 +18,7 @@ class BaseEmployeeSerializer(serializers.ModelSerializer):
 
 class ListEmployeeSerializer(BaseEmployeeSerializer):
     roles = serializers.StringRelatedField(many=True)
-    employee_name = serializers.CharField(source='user.full_name')
+    employee_name = serializers.CharField(source='full_name')
     is_super_admin = serializers.BooleanField()
 
     class Meta(BaseEmployeeSerializer.Meta):
@@ -54,8 +54,14 @@ COMPANY
 
 
 class BaseCompanySerializer(serializers.ModelSerializer):
+    my_roles = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = Company
+
+    def get_my_roles(self, instance):
+        user = self.context.get('request').user
+        return instance.employees.filter(user_id=user.id).values_list('roles__name', flat=True)
 
 
 class ListCompanySerializer(BaseCompanySerializer):

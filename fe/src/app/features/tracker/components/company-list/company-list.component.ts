@@ -5,6 +5,7 @@ import { ActionsSubject, Store, select } from '@ngrx/store';
 import { TrackerState, LoadCompanies, SelectCompanies, DeleteCompany } from '../../state';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import Swal from 'sweetalert2';
+import { AuthService } from 'src/app/features/user/services';
 
 @Component({
   selector: 'tracker-company-list',
@@ -28,6 +29,7 @@ export class CompanyListComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
+    public authService: AuthService,
     private store: Store<TrackerState>,
     private actionsSubject$: ActionsSubject,
   ) {

@@ -31,6 +31,7 @@ import { EmployeeEditorFormComponent } from './components/employee-editor-form/e
 import { AssetListComponent } from './components/asset-list/asset-list.component';
 import { AssetEditorComponent } from './components/asset-editor/asset-editor.component';
 import { AssetEditorFormComponent } from './components/asset-editor-form/asset-editor-form.component';
+import { AuthService } from '../user/services';
 
 
 @NgModule({
@@ -83,7 +84,8 @@ import { AssetEditorFormComponent } from './components/asset-editor-form/asset-e
     MatCheckboxModule,
   ],
   providers: [
-    CdkColumnDef
+    CdkColumnDef,
+    AuthService,
   ]
 })
 export class TrackerModule { }

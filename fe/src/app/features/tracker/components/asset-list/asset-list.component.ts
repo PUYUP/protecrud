@@ -6,6 +6,7 @@ import { ActionsSubject, Store } from '@ngrx/store';
 import { AppState } from 'src/app/state/state';
 import { DeleteAsset, RetrieveCompany } from '../../state';
 import Swal from 'sweetalert2';
+import { AuthService } from 'src/app/features/user/services';
 
 @Component({
   selector: 'tracker-asset-list',
@@ -24,14 +25,19 @@ export class AssetListComponent {
 
   public getScreenWidth: any;
   public getScreenHeight: any;
-  private onDestroy$: Subject<boolean> | any = new Subject<boolean>;
   public displayedColumns: string[] = ['name', 'quantity', 'condition', 'description', 'action'];
+  public roles: string[] = [];
+
+  private onDestroy$: Subject<boolean> | any = new Subject<boolean>;
 
   constructor(
     private matDialog: MatDialog,
     private store: Store<AppState>,
     private actionsSubject$: ActionsSubject,
+    private authService: AuthService,
   ) {
+    this.roles = this.authService.Roles;
+    
     // listen state changed
     this.actionsSubject$.pipe(takeUntil(this.onDestroy$)).subscribe((state: any) => {
       switch (state.type) {

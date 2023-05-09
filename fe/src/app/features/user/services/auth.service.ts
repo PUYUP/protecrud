@@ -40,6 +40,14 @@ export class AuthService {
     return this.GetToken() !== null;
   }
 
+  public get Roles(): string[] {
+    if (this.GetToken() !== null) {
+      return this.GetToken().groups;
+    }
+
+    return [];
+  }
+
   public ClearToken(): void {
     localStorage.clear();
   }

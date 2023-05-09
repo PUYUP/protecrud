@@ -1,7 +1,13 @@
 <div class="text-lg mb-4 flex items-center">
   <div>Employees</div>
   <div class="ml-auto">
-    <button mat-raised-button color="primary" class="w-36" (click)="addEmployeeHandler()">Add Employee</button>
+    <button 
+      mat-raised-button 
+      color="primary" 
+      class="w-36" 
+      (click)="addEmployeeHandler()" 
+      [disabled]="!roles.includes('Admin')"
+    >Add Employee</button>
   </div>
 </div>
 
@@ -46,7 +52,7 @@
       </div>
 
       <ng-template #actions>
-        <div class="flex justify-center gap-3">
+        <div *ngIf="roles.includes('Admin')" class="flex justify-center gap-3">
           <button mat-icon-button color="warn" (click)="deleteHandler(element.id)" matTooltip="Delete">
             <mat-icon>delete_forever</mat-icon>
           </button>

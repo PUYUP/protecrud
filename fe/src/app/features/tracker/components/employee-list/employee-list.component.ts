@@ -6,6 +6,7 @@ import { DeleteEmployee, RetrieveCompany } from '../../state';
 import { ActionsSubject, Store } from '@ngrx/store';
 import { AppState } from 'src/app/state/state';
 import { Subject, takeUntil } from 'rxjs';
+import { AuthService } from 'src/app/features/user/services';
 
 @Component({
   selector: 'tracker-employee-list',
@@ -24,14 +25,18 @@ export class EmployeeListComponent {
 
   public getScreenWidth: any;
   public getScreenHeight: any;
-  private onDestroy$: Subject<boolean> | any = new Subject<boolean>;
   public displayedColumns: string[] = ['name', 'roles', 'create_at', 'action'];
+  public roles: string[] = [];
+  private onDestroy$: Subject<boolean> | any = new Subject<boolean>;
 
   constructor(
+    public authService: AuthService,
     private dialog: MatDialog,
     private store: Store<AppState>,
     private actionsSubject$: ActionsSubject,
   ) {
+    this.roles = this.authService.Roles;
+
     // listen state changed
     this.actionsSubject$.pipe(takeUntil(this.onDestroy$)).subscribe((state: any) => {
       switch (state.type) {

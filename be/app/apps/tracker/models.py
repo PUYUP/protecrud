@@ -1,9 +1,6 @@
 from django.db import models
-from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import Group
-
-User = get_user_model()
 
 
 class Company(models.Model):
@@ -11,7 +8,7 @@ class Company(models.Model):
     update_at = models.DateTimeField(auto_now=True)
 
     created_by = models.ForeignKey(
-        User, related_name='companies', on_delete=models.CASCADE)
+        'user.User', related_name='companies', on_delete=models.CASCADE)
     name = models.CharField(max_length=255, db_index=True)
     description = models.TextField(null=True, blank=True)
 
@@ -30,16 +27,20 @@ class Employee(models.Model):
     company = models.ForeignKey(
         Company, related_name='employees', on_delete=models.CASCADE)
     user = models.ForeignKey(
-        User, related_name='employees', on_delete=models.CASCADE)
+        'user.User', related_name='employees', on_delete=models.CASCADE)
     roles = models.ManyToManyField(Group)
 
     def __str__(self) -> str:
-        return self.user.full_name
+        return self.user.username
 
     @property
     def is_super_admin(self):
         # super admin actually is company `created_by`
         return self.company.created_by.id == self.user.id
+
+    @property
+    def full_name(self):
+        return 'ada'
 
 
 class Asset(models.Model):
@@ -54,7 +55,7 @@ class Asset(models.Model):
     company = models.ForeignKey(
         Company, related_name='assets', on_delete=models.CASCADE)
     created_by = models.ForeignKey(
-        User, related_name='assets', on_delete=models.CASCADE)
+        'user.User', related_name='assets', on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
     quantity = models.IntegerField(default=0)

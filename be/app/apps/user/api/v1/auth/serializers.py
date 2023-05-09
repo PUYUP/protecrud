@@ -1,10 +1,9 @@
 from django.contrib.auth.models import Group
-from django.contrib.auth import get_user_model
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
 
-User = get_user_model()
+from apps.user.models import User
 
 
 class AuthenticationSerializer(TokenObtainPairSerializer):
