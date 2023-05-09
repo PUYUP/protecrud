@@ -90,6 +90,10 @@ class SubmitCompanySerializer(BaseCompanySerializer):
             'update_at': {'read_only': True},
         }
 
+    def to_representation(self, instance):
+        serializer = RetrieveCompanySerializer(instance, context=self.context)
+        return serializer.data
+
     @transaction.atomic
     def create(self, validated_data):
         defaults = {
