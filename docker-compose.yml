@@ -1,17 +1,26 @@
 version: '2'
 
 services:
-  webapi:
-    build: ./app
+  backend:
+    build: ./be/app
     command: python manage.py runserver 0.0.0.0:9000
     volumes:
-      - ./app/:/usr/src/protecrud/
+      - ./be/app/:/usr/src/protecrud/be/
     ports:
       - 9000:9000
     env_file:
-      - ./.env.dev
+      - ./be/.env.dev
     depends_on:
       - database
+  frontend:
+    build: ./fe/app
+    command: ng serve
+    volumes:
+      - ./fe/app/:/usr/src/protecrud/fe/
+    ports:
+      - 4000:4000
+    depends_on:
+      - backend
   database:
     image: postgres:15.2
     volumes: 
@@ -21,6 +30,6 @@ services:
       - POSTGRES_PASSWORD=V9rj0kmE#e0R
       - POSTGRES_DB=webapi_dev
   
+  
 volumes:
-  webapi:
   postgres_data:
